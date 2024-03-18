@@ -122,14 +122,14 @@ def init_transactions_routes(app: FastAPI):
             response.status_code = 500
             return TransactionResponse(code=500, error_desc=str(e))
 
-    @app.get("/transactions/get_by_fuel/{id}", response_model=TransactionResponse)
-    async def get_by_fuel_type(
+    @app.get("/transactions/get_by_client_type/{id}", response_model=TransactionResponse)
+    async def get_by_client_type(
         response: Response,
         id: int,
         session: AsyncSession = Depends(get_session),
     ):
         try:
-            result: DbResult = await Transaction.get_by_id(session, id)
+            result: DbResult = await Transaction.get_by_client_type(session, id)
             if result.is_error is True:
                 response.status_code = 500
                 return TransactionResponse(code=500, error_desc=result.error_desc)

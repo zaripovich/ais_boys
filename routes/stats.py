@@ -79,4 +79,21 @@ def init_stats_routes(app: FastAPI):
             return StatsResponse(code=500, error_desc=str(e))
         
         
-    
+    @app.post("/stats/get_human_count", response_model=StatsResponse)
+    async def get_human_count(
+        response: Response,
+        data: BusDateFilter,
+        session: AsyncSession = Depends(get_session),
+    ):
+        try:
+            result_trans: DbResult = await Transaction.get_by_bus_and_time(session,data.bus_id,data.date_from,data.date_to)
+            if result_trans.is_error is True:
+                response.status_code = 500
+                return StatsResponse(code=500, error_desc=result_trans.error_desc)
+            transactions: list[Transaction] = result_trans.value
+            date = data.date_to - data.date_from
+            power = len(transactions)/(date.total_seconds()/60/60)
+            return StatsResponse(code=200, value=power)
+        except Exception as e:
+            response.status_code = 500
+            return StatsResponse(code=500, error_desc=str(e))   
