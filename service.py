@@ -46,10 +46,10 @@ def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
     openapi_schema = get_openapi(
-        title="Custom title",
+        title="Оплата проезда",
         version="2.5.0",
-        summary="This is a very custom OpenAPI schema",
-        description="Here's a longer description of the custom **OpenAPI** schema",
+        summary="----------",
+        description="Бэкэнд сервиса по оплате проезда",
         routes=app.routes,
     )
     return openapi_schema
