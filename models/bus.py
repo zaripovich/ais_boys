@@ -87,7 +87,7 @@ class Bus(Base):
     
     async def set_price(session: AsyncSession, bus_id: int, price: float) -> DbResult:
         try:
-            await session.execute(update(Bus).where(Bus.id == bus_id).values(price=Bus.price+price))
+            await session.execute(update(Bus).where(Bus.id == bus_id).values(price=price))
             await session.commit()
             return DbResult.result()
         except Exception as e:
