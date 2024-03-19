@@ -102,8 +102,8 @@ def init_client_types_routes(app: FastAPI):
         session: AsyncSession = Depends(get_session),
     ):
         try:
-            fuel_result = await ClientType.get_by_id(session,data.client_type)
-            if fuel_result.is_error:
+            client_type = await ClientType.get_by_id(session,data.client_type)
+            if client_type.is_error:
                 response.status_code = 500
                 return UpdateResponse(code=500, error_desc="Client Not Found")
             result = await ClientType.set_discount(session,data.client_type,data.new_discount)
