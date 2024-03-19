@@ -126,11 +126,11 @@ def test_get_median_price():
     assert response.json()["value"] is not None
 
 
-def test_get_all_fuel():
+def test_get_all_price():
     test_data = {"bus_id": 1, "date_from": datetime.datetime(day=8,month=3,year=2024).isoformat(), "date_to": datetime.datetime.now().isoformat()}
     post_data = json.dumps(test_data)
     response = client.post(
-        "/stats/get_all_fuel", data= post_data
+        "/stats/get_all_price", data= post_data
     )
     print(response.json())
     assert response.json()["code"] == 200
